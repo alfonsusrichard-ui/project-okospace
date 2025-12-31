@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galeri Testimoni - Okospace</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --primary-color: #f0f0f0; 
+        --secondary-color: #66d9ff; 
+        --dark-bg: #0d0d1a; 
+        --card-bg: #1a1a2e; 
+        --accent-color: #ffe066; 
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-image: linear-gradient(135deg, #0d0d1a 0%, #080810 100%);
+        color: var(--primary-color);
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* HEADER */
+    header {
+        margin-bottom: 40px;
+        border-bottom: 2px solid var(--secondary-color);
+        padding-bottom: 20px;
+    }
+
+    h1 {
+        color: var(--secondary-color);
+        text-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+    }
+
+    /* TOMBOL KEMBALI */
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        margin-bottom: 20px;
+        text-decoration: none;
+        color: var(--primary-color);
+        background: #2c3e50;
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-weight: 600;
+        border: 1px solid #4a657e;
+    }
+    .btn-back:hover {
+        background: var(--secondary-color);
+        color: #000;
+        transform: translateX(-5px);
+    }
+
+    /* GALERI GRID SYSTEM */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .gallery-item {
+        background: var(--card-bg);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        transition: transform 0.3s ease;
+        position: relative;
+    }
+
+    .gallery-item:hover {
+        transform: scale(1.03);
+        z-index: 10;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+        border: 2px solid var(--accent-color);
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+    }
+
+    .caption {
+        padding: 10px;
+        font-size: 0.9em;
+        color: #ccc;
+        background: rgba(0,0,0,0.6);
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div style="text-align: left;">
+        <a href="index.html" class="btn-back">
+            <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Kembali ke Home
+        </a>
+    </div>
+
+    <header>
+        <h1>📸 Bukti Kepercayaan Pelayer</h1>
+        <p>Kumpulan screenshot testimoni, hasil winstreak, dan transaksi sukses.</p>
+    </header>
+
+    <div class="gallery-grid">
+        
+        <div class="gallery-item">
+            <img src="TESTIMONI/TESTIMONI 1.png" alt="Testimoni 1">
+            <div class="caption">Winstreak Epic 3 > Epic 2</div>
+        </div>
+
+        <div class="gallery-item">
+            <img src="TESTIMONI/TESTIMONI 2.png" alt="Testimoni 2">
+            <div class="caption">Winstreak Epic 2 B4 > Legend 4 B1</div>
+        </div>
+
+        <div class="gallery-item">
+            <img src="https://via.placeholder.com/300x500/1a1a2e/ff4d4d?text=Bukti+Transfer" alt="Testimoni 3">
+            <div class="caption">Transaksi Aman 100%</div>
+        </div>
+
+        <div class="gallery-item">
+            <img src="https://via.placeholder.com/300x450/1a1a2e/ffffff?text=Hasil+Joki+Fish+It" alt="Testimoni 4">
+            <div class="caption">Hasil Joki Fish It!</div>
+        </div>
+
+        <div class="gallery-item">
+            <img src="https://via.placeholder.com/300x500/1a1a2e/66d9ff?text=Naik+Rank+Ekslusif" alt="Testimoni 5">
+            <div class="caption">Dari Epic ke Mythic</div>
+        </div>
+
+        </div>
+</div>
+
+</body>
+</html>
