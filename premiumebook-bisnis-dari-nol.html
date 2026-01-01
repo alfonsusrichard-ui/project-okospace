@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium: Bisnis Online Dari Nol — OKOSPACE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ffd700; /* Warna Gold untuk kesan Premium */
+            --secondary: #ff8c00;
+            --bg: #0a0a0a;
+            --card-bg: #151515;
+            --text: #ffffff;
+            --accent: #ffd700;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding-top: 60px;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            text-decoration: none;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: 0.3s;
+        }
+
+        .back-btn:hover { background: rgba(255, 215, 0, 0.2); }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .premium-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #ffd700, #ff8c00);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 12px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header-section h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin: 10px 0;
+            background: linear-gradient(to right, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .summary-box {
+            background: var(--card-bg);
+            border-left: 4px solid var(--primary);
+            padding: 30px;
+            border-radius: 0 20px 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .chapter-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .chapter-item {
+            background: #1e1e1e;
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .chapter-num {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .chapter-content h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .chapter-content p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #aaa;
+        }
+
+        /* Payment Section */
+        .paywall-cta {
+            margin: 60px 0;
+            padding: 50px;
+            background: linear-gradient(145deg, #1a1a1a, #000);
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+        }
+
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 20px 0;
+        }
+
+        .price-tag span {
+            font-size: 1rem;
+            text-decoration: line-through;
+            opacity: 0.5;
+            margin-right: 10px;
+        }
+
+        .checkout-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #ffd700, #ff8c00);
+            color: #000;
+            padding: 18px 45px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(255, 140, 0, 0.3);
+        }
+
+        .checkout-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 140, 0, 0.5);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 12px;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 600px) {
+            .header-section h1 { font-size: 2rem; }
+            .paywall-cta { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="ebook.html" class="back-btn">← Kembali</a>
+
+    <div class="container">
+        <div class="header-section">
+            <div class="premium-badge">Exclusive Access</div>
+            <h1>Premium Summary: Bisnis Online Dari Nol</h1>
+            <p>Dapatkan strategi "to-the-point", checklist eksekusi, dan rahasia yang tidak dibagikan di versi gratis.</p>
+        </div>
+
+        <div class="summary-box">
+            <h3>Kenapa Versi Premium?</h3>
+            <p>Kami memangkas teori dan langsung memberikan <strong>blueprint</strong>. Cocok untuk kamu yang ingin hasil instan tanpa harus membaca ratusan halaman.</p>
+        </div>
+
+        <div class="chapter-list">
+            <div class="chapter-item">
+                <div class="chapter-num">1</div>
+                <div class="chapter-content">
+                    <h3>Strategi Validasi Market</h3>
+                    <p>Cara tahu produkmu bakal laku atau nggak sebelum keluar modal sepeserpun.</p>
+                </div>
+            </div>
+
+            <div class="chapter-item">
+                <div class="chapter-num">2</div>
+                <div class="chapter-content">
+                    <h3>High-Conversion Script</h3>
+                    <p>Template chat/copywriting untuk closing pelanggan dalam 5 menit pertama.</p>
+                </div>
+            </div>
+
+            <div class="chapter-item">
+                <div class="chapter-num">3</div>
+                <div class="chapter-content">
+                    <h3>Workflow Automasi</h3>
+                    <p>Set-up tools AI agar bisnismu berjalan otomatis saat kamu tidur.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="paywall-cta">
+            <h2>Buka Akses Lengkap & Komunitas</h2>
+            <p>Dapatkan PDF Premium, Template Notion, dan Video Tutorial Singkat.</p>
+            
+            <div class="price-tag">
+                <span>Rp 149k</span> Rp 49.000
+            </div>
+
+            <a href="http://lynk.id/okospace/6y4lg4wgl3og/checkout" class="checkout-btn" target="_blank">
+                BELI AKSES SEKARANG
+            </a>
+            
+            <p style="margin-top: 20px; font-size: 12px; opacity: 0.6;">
+                Pembayaran aman via GoPay, OVO, Dana, atau Transfer Bank melalui Lynk.id
+            </p>
+        </div>
+
+        <div class="footer">
+            &copy; 2024 OKOSPACE PREMIUM. All rights reserved.
+        </div>
+    </div>
+
+</body>
+</html>

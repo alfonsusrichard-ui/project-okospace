@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koleksi Ebook OKOSPACE</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    :root {
+        --primary: #00f2ff; --secondary: #7000ff; --dark: #050505; --glass: rgba(255, 255, 255, 0.05);
+    }
+    body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--dark); color: #fff; }
+    .container { max-width: 1300px; margin: auto; padding: 80px 25px; }
+    .hero { text-align: center; margin-bottom: 50px; }
+    .hero h1 { font-size: 3.2rem; margin-bottom: 10px; }
+    .hero p { opacity: .7; }
+
+    /* Filter Styling */
+    .filter { display: flex; justify-content: center; gap: 15px; margin: 40px 0; flex-wrap: wrap; }
+    .filter button { padding: 10px 22px; border-radius: 30px; border: 1px solid var(--primary); background: none; color: #fff; cursor: pointer; transition: 0.3s; }
+    .filter button.active, .filter button:hover { background: linear-gradient(45deg, var(--primary), var(--secondary)); border-color: transparent; }
+
+    /* Grid & Cards */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+    .card { background: var(--glass); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 30px; transition: .4s; position: relative; overflow: hidden; }
+    .card:hover { transform: translateY(-12px); border-color: var(--primary); }
+    
+    .badge { padding: 6px 14px; border-radius: 30px; font-size: 11px; display: inline-block; font-weight: bold; }
+    .free { background: #00f2ff22; color: var(--primary); }
+    .premium { background: #ffb30022; color: #ffb300; }
+
+    .btn { margin-top: 18px; display: inline-block; padding: 12px 26px; border-radius: 14px; background: linear-gradient(45deg, var(--primary), var(--secondary)); color: #fff; text-decoration: none; font-weight: 600; cursor: pointer; border: none; width: 100%; text-align: center; box-sizing: border-box; }
+    
+    /* Modal System */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 1000; }
+    .modal-content { background: #151515; padding: 40px; border-radius: 24px; border: 1px solid var(--primary); width: 90%; max-width: 400px; text-align: center; }
+    .modal-content input { width: 100%; padding: 15px; margin: 20px 0; border-radius: 12px; border: 1px solid #333; background: #222; color: #fff; box-sizing: border-box; font-size: 1rem; text-align: center; }
+    .btn-buy { background: none; border: 1px solid #ffb300; color: #ffb300; margin-top: 10px; }
+    .close-modal { position: absolute; top: 20px; right: 20px; color: #fff; cursor: pointer; font-size: 1.5rem; }
+
+    @media(max-width:768px){ .hero h1 { font-size: 2.4rem; } }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="hero">
+        <h1>Koleksi EBook OKOSPACE</h1>
+        <p>Upgrade skill, cuan digital, dan dominasi game</p>
+    </div>
+
+    <div class="filter">
+        <button class="active" onclick="filterEbook('all', event)">Semua</button>
+        <button onclick="filterEbook('game', event)">Game</button>
+        <button onclick="filterEbook('bisnis', event)">Bisnis</button>
+        <button onclick="filterEbook('digital', event)">Digital Skill</button>
+    </div>
+
+    <div class="grid" id="ebookGrid">
+        <div class="card" data-cat="bisnis">
+            <span class="badge free">GRATIS</span>
+            <h3>Bisnis Online dari nol</h3>
+            <p>Mulai dari Nol, Gas Sampai Cuan</p>
+            <a href="bisnis-dari-nol-ebook.html" class="btn">Baca Sekarang</a>
+        </div>
+
+        <div class="card" data-cat="game">
+            <span class="badge premium">PREMIUM</span>
+            <h3>Blueprint Joki Profesional</h3>
+            <p>Sistem joki dari nol sampai stabil income.</p>
+            <button onclick="checkAccess('bisnis-dari-nol-ebook.html')" class="btn">Buka Akses</button>
+        </div>
+
+        <div class="card" data-cat="digital">
+            <span class="badge premium">PREMIUM</span>
+            <h3>Digital Income Playbook</h3>
+            <p>Game, jasa, & aset digital cuan.</p>
+            <button onclick="checkAccess('https://link-ebook-digital.com', 'CUAN-DIGITAL-99')" class="btn">Buka Akses</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="licenseModal">
+    <div class="modal-content">
+        <i class="fas fa-lock" style="font-size: 3rem; color: #ffb300; margin-bottom: 20px;"></i>
+        <h2>Konten Terkunci</h2>
+        <p>Masukkan kode lisensi untuk membaca ebook ini.</p>
+        <input type="text" id="licenseInput" placeholder="Contoh: OKO-XXXX-XXXX">
+        <button onclick="validateLicense()" class="btn">Verifikasi Kode</button>
+        <a href="https://wa.me/6285179752247?text=Halo%20Admin,%20saya%20ingin%20beli%20lisensi%20ebook" target="_blank" class="btn btn-buy">Belum punya kode? Beli Sekarang</a>
+        <p onclick="closeModal()" style="margin-top: 20px; cursor: pointer; opacity: 0.5; font-size: 0.8rem;">Batal</p>
+    </div>
+</div>
+
+<script>
+// Simpan 150 kode lisensi dalam satu daftar (Array)
+const LIST_LISENSI = [
+    "OKO-1123-A456", "OKO-9821-B772", "OKO-3345-C910", "OKO-5567-D221", "OKO-7789-E334",
+    "OKO-1011-F445", "OKO-1213-G556", "OKO-1415-H667", "OKO-1617-I778", "OKO-1819-J889",
+    "OKO-2021-K990", "OKO-2223-L112", "OKO-2425-M223", "OKO-2627-N334", "OKO-2829-O445",
+    "OKO-3031-P556", "OKO-3233-Q667", "OKO-3435-R778", "OKO-3637-S889", "OKO-3839-T990",
+    "OKO-4041-U112", "OKO-4243-V223", "OKO-4445-W334", "OKO-4647-X445", "OKO-4849-Y556",
+    "OKO-5051-Z667", "OKO-5253-A111", "OKO-5455-B222", "OKO-5657-C333", "OKO-5859-D444",
+    "OKO-6061-E555", "OKO-6263-F666", "OKO-6465-G777", "OKO-6667-H888", "OKO-6869-I999",
+    "OKO-7071-J000", "OKO-7273-K121", "OKO-7475-L232", "OKO-7677-M343", "OKO-7879-N454",
+    "OKO-8081-O565", "OKO-8283-P676", "OKO-8485-Q787", "OKO-8687-R898", "OKO-8889-S909",
+    "OKO-9091-T010", "OKO-9293-U121", "OKO-9495-V232", "OKO-9697-W343", "OKO-9899-X454",
+    "OKO-1111-Y565", "OKO-2222-Z676", "OKO-3333-A787", "OKO-4444-B898", "OKO-5555-C909",
+    "OKO-6666-D010", "OKO-7777-E121", "OKO-8888-F232", "OKO-9999-G343", "OKO-1001-H454",
+    "OKO-2002-I565", "OKO-3003-J676", "OKO-4004-K787", "OKO-5005-L898", "OKO-6006-M909",
+    "OKO-7007-N010", "OKO-8008-O121", "OKO-9009-P232", "OKO-1112-Q343", "OKO-1314-R454",
+    "OKO-1516-S565", "OKO-1718-T676", "OKO-1920-U787", "OKO-2122-V898", "OKO-2324-W909",
+    "OKO-2526-X010", "OKO-2728-Y121", "OKO-2930-Z232", "OKO-3132-A343", "OKO-3334-B454",
+    "OKO-3536-C565", "OKO-3738-D676", "OKO-3940-E787", "OKO-4142-F898", "OKO-4344-G909",
+    "OKO-4546-H010", "OKO-4748-I121", "OKO-4950-J232", "OKO-5152-K343", "OKO-5354-L454",
+    "OKO-5556-M565", "OKO-5758-N676", "OKO-5960-O787", "OKO-6162-P898", "OKO-6364-Q909",
+    "OKO-6566-R010", "OKO-6768-S121", "OKO-6970-T232", "OKO-7172-U343", "OKO-7374-V454",
+    "OKO-7576-W565", "OKO-7778-X676", "OKO-7980-Y787", "OKO-8182-Z898", "OKO-8384-A909",
+    "OKO-8586-B010", "OKO-8788-C121", "OKO-8990-D232", "OKO-9192-E343", "OKO-9394-F454",
+    "OKO-9596-G565", "OKO-9798-H676", "OKO-9900-I787", "OKO-1121-J898", "OKO-2232-K909",
+    "OKO-3343-L010", "OKO-4454-M121", "OKO-5565-N232", "OKO-6676-O343", "OKO-7787-P454",
+    "OKO-8898-Q565", "OKO-9909-R676", "OKO-1010-S787", "OKO-2020-T898", "OKO-3030-U909",
+    "OKO-4040-V010", "OKO-5050-W121", "OKO-6060-X232", "OKO-7070-Y343", "OKO-8080-Z454",
+    "OKO-9090-A565", "OKO-1234-B676", "OKO-5678-C787", "OKO-9012-D898", "OKO-3456-E909",
+    "OKO-7890-F010", "OKO-1357-G121", "OKO-2468-H232", "OKO-9753-I343", "OKO-8642-J454",
+    "OKO-1110-K565", "OKO-2220-L676", "OKO-3330-M787", "OKO-4440-N898", "OKO-5550-O909",
+    "OKO-6660-P010", "OKO-7770-Q121", "OKO-8880-R232", "OKO-9990-S343", "OKO-1000-T454"
+];
+
+let currentTargetLink = "";
+
+function checkAccess(link) {
+    currentTargetLink = link;
+    
+    // Cek apakah user sudah pernah sukses aktivasi sebelumnya
+    if (localStorage.getItem("premium_unlocked") === "true") {
+        window.location.href = link;
+    } else {
+        document.getElementById('licenseModal').style.display = 'flex';
+    }
+}
+
+function validateLicense() {
+    const input = document.getElementById('licenseInput').value.trim();
+    
+    // Cek apakah input ada di dalam daftar 150 kode
+    if (LIST_LISENSI.includes(input)) {
+        alert("✅ Lisensi Valid! Akses Premium Terbuka.");
+        localStorage.setItem("premium_unlocked", "true"); // Simpan status
+        window.location.href = currentTargetLink;
+    } else {
+        alert("❌ Kode Lisensi Salah atau sudah digunakan!");
+    }
+}
+
+function closeModal() {
+    document.getElementById('licenseModal').style.display = 'none';
+}
+</script>
+
+</body>
+</html>

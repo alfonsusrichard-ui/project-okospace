@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OKOSPACE - Root Terminal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Space+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #00f2ff;
+            --secondary: #7000ff;
+            --bg-dark: #0a0b10;
+            --accent-green: #00ff88;
+            --danger: #ff004c;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* --- CUSTOM MENU --- */
+        #customMenu {
+            display: none;
+            position: fixed;
+            background: #121212;
+            border: 1px solid #333;
+            border-radius: 12px;
+            z-index: 10000;
+            width: 180px;
+            padding: 8px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+        }
+
+        .menu-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            font-size: 13px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.2s;
+        }
+
+        .menu-item:hover { background: var(--primary); color: #000; font-weight: 700; }
+        .menu-item.danger:hover { background: var(--danger); color: white; }
+
+        /* --- UI COMPONENTS --- */
+        .page-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 35px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .neo-input {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 12px;
+            color: white;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            font-family: 'Space Mono', monospace;
+            outline: none;
+        }
+
+        .btn {
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 800;
+            background: var(--primary);
+            color: #000;
+            width: 100%;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,242,255,0.4); }
+
+        /* --- DASHBOARD STYLES --- */
+        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
+        .stat-card { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .code-list { background: #000; border-radius: 15px; max-height: 300px; overflow-y: auto; border: 1px solid #222; }
+        .code-item { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid #111; font-size: 13px; }
+
+        .hidden { display: none !important; }
+        .animate { animation: fadeIn 0.5s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- CUSTOM CURSOR --- */
+* {
+    cursor: none !important; /* Sembunyikan kursor asli */
+}
+
+#customCursor {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 99999;
+    transition: transform 0.1s ease;
+    box-shadow: 0 0 15px var(--primary);
+}
+
+#customCursorDot {
+    width: 4px;
+    height: 4px;
+    background: var(--primary);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 99999;
+}
+
+/* --- ANIMASI CONTEXT MENU --- */
+#customMenu {
+    display: none;
+    position: fixed;
+    background: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--primary);
+    border-radius: 12px;
+    z-index: 10000;
+    width: 180px;
+    padding: 8px;
+    box-shadow: 0 15px 50px rgba(0, 242, 255, 0.2);
+    
+    /* Efek Animasi Muncul */
+    transform: scale(0.8);
+    opacity: 0;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
+}
+
+#customMenu.active {
+    display: block;
+    transform: scale(1);
+    opacity: 1;
+}
+    </style>
+</head>
+<body>
+<div id="customCursor"></div>
+<div id="customCursorDot"></div>
+
+    <div id="customMenu">
+        <div class="menu-item" onclick="handleCopy()"><i class="fas fa-copy"></i> Copy Text</div>
+        <div class="menu-item" onclick="handlePaste()"><i class="fas fa-paste"></i> Paste Text</div>
+        <div style="height:1px; background:#333; margin:5px;"></div>
+        <div class="menu-item" onclick="location.reload()"><i class="fas fa-sync"></i> Refresh System</div>
+        <div class="menu-item danger" onclick="resetApp()"><i class="fas fa-skull"></i> Wipe Database</div>
+    </div>
+
+<section id="loginPass" class="page-section">
+    <div class="glass-card animate" style="text-align: center;">
+        <div style="margin-bottom: 30px;">
+            <h1 style="margin:0; font-weight: 800; font-size: 1.8rem; letter-spacing: 2px;">
+                OKO<span style="color:var(--primary)">SPACE</span>
+            </h1>
+            <div style="font-size: 10px; color: var(--primary); letter-spacing: 4px; opacity: 0.8; margin-top: 5px; font-weight: 600;">
+                ADMIN TERMINAL
+            </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05);">
+            <i class="fas fa-user-shield" style="font-size: 30px; color: var(--primary); margin-bottom: 15px;"></i>
+            <h3 style="margin: 0 0 20px 0; font-size: 14px; opacity: 0.7;">ROOT AUTHENTICATION</h3>
+            
+            <input type="password" id="mainPass" class="neo-input" placeholder="Password Utama" style="text-align:center;">
+            <button onclick="checkPass()" class="btn">Masuk Sistem</button>
+        </div>
+        
+        <p style="margin-top: 20px; font-size: 10px; opacity: 0.3;">AUTHORIZED PERSONNEL ONLY</p>
+    </div>
+</section>
+
+    <section id="loginPin" class="page-section hidden">
+        <div class="glass-card animate" style="text-align:center;">
+            <h3>Security Verification</h3>
+            <p style="font-size:12px; opacity:0.6;">Enter 4-Digit Security PIN</p>
+            <div style="display:flex; gap:10px; justify-content:center; margin:20px 0;">
+                <input type="text" maxlength="1" class="neo-input" id="p1" style="width:50px; text-align:center; margin:0;" onkeyup="moveFocus(this, 'p2')">
+                <input type="text" maxlength="1" class="neo-input" id="p2" style="width:50px; text-align:center; margin:0;" onkeyup="moveFocus(this, 'p3')">
+                <input type="text" maxlength="1" class="neo-input" id="p3" style="width:50px; text-align:center; margin:0;" onkeyup="moveFocus(this, 'p4')">
+                <input type="text" maxlength="1" class="neo-input" id="p4" style="width:50px; text-align:center; margin:0;">
+            </div>
+            <button onclick="checkPin()" class="btn" style="background:var(--accent-green);">Verify PIN</button>
+        </div>
+    </section>
+
+    <section id="dashboard" class="page-section hidden" style="align-items: flex-start; padding-top:40px; overflow-y:auto;">
+        <div class="container animate" style="max-width: 600px; width:100%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h2 style="margin:0;"><i class="fas fa-terminal"></i> MASTER CONTROL</h2>
+                <span style="font-size: 10px; color: var(--accent-green); border: 1px solid var(--accent-green); padding: 4px 8px; border-radius: 5px;">SYSTEM ONLINE</span>
+            </div>
+
+            <div class="admin-grid">
+                <div class="stat-card">
+                    <div style="font-size: 10px; opacity: 0.5;">TOTAL LICENSES</div>
+                    <div style="font-size: 24px; font-weight: 800; color: var(--primary);" id="statTotal">0</div>
+                </div>
+                <div class="stat-card">
+                    <div style="font-size: 10px; opacity: 0.5;">AUTH STATUS</div>
+                    <div style="font-size: 14px; font-weight: 800; color: var(--primary);">ENCRYPTED</div>
+                </div>
+            </div>
+
+            <div class="glass-card" style="max-width:none; padding:20px; margin-bottom:20px;">
+                <label style="font-size: 11px; opacity: 0.5; margin-bottom: 10px; display: block;">KEY GENERATOR</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="number" id="genQty" value="10" class="neo-input" style="margin:0;">
+                    <button onclick="generateKeys()" class="btn" style="width: 160px;">GENERATE</button>
+                </div>
+            </div>
+
+            <input type="text" id="searchBox" class="neo-input" placeholder="Search keys..." onkeyup="filterKeys()">
+            <div class="code-list" id="keyList"></div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; padding-bottom: 50px;">
+                <button onclick="copyAll()" class="btn" style="background:#1a1a1a; color:white;"><i class="fas fa-download"></i> Export Keys</button>
+                <button onclick="resetApp()" class="btn" style="background:rgba(255,0,0,0.1); color:var(--danger); border: 1px solid var(--danger);"><i class="fas fa-trash"></i> Wipe All</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // CONFIG
+        const MASTER_PASS = "ADMIN123";
+        const MASTER_PIN = "2025";
+        let db = new Set(["OKO-7777-PREM", "OKO-8888-BOSS"]);
+
+        // --- AUTH LOGIC ---
+        function checkPass() {
+            if(document.getElementById('mainPass').value === MASTER_PASS) {
+                document.getElementById('loginPass').classList.add('hidden');
+                document.getElementById('loginPin').classList.remove('hidden');
+                document.getElementById('p1').focus();
+            } else { alert("Wrong Password!"); }
+        }
+
+        function moveFocus(curr, next) { if(curr.value.length >= 1) document.getElementById(next).focus(); }
+
+        function checkPin() {
+            const pin = document.getElementById('p1').value + document.getElementById('p2').value + 
+                        document.getElementById('p3').value + document.getElementById('p4').value;
+            if(pin === MASTER_PIN) {
+                document.getElementById('loginPin').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+                document.body.style.overflow = "auto";
+                render();
+            } else { alert("Wrong PIN!"); }
+        }
+
+// --- LOGIKA KURSOR CUSTOM ---
+const cursor = document.getElementById('customCursor');
+const dot = document.getElementById('customCursorDot');
+
+document.addEventListener('mousemove', (e) => {
+    // Kursor mengikuti mouse
+    cursor.style.left = e.clientX - 10 + 'px';
+    cursor.style.top = e.clientY - 10 + 'px';
+    dot.style.left = e.clientX - 2 + 'px';
+    dot.style.top = e.clientY - 2 + 'px';
+});
+
+// Efek klik pada kursor
+document.addEventListener('mousedown', () => cursor.style.transform = 'scale(0.7)');
+document.addEventListener('mouseup', () => cursor.style.transform = 'scale(1)');
+
+
+// --- LOGIKA CONTEXT MENU DENGAN ANIMASI ---
+const menu = document.getElementById('customMenu');
+
+document.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    
+    // Reset posisi dan tampilkan dulu untuk hitung dimensi jika perlu
+    menu.style.display = 'block'; 
+    menu.style.left = e.pageX + 'px';
+    menu.style.top = e.pageY + 'px';
+    
+    // Trigger animasi via class (setTimeout agar display:block sempat terproses)
+    setTimeout(() => {
+        menu.classList.add('active');
+    }, 10);
+});
+
+document.addEventListener('click', () => {
+    menu.classList.remove('active');
+    setTimeout(() => {
+        if(!menu.classList.contains('active')) menu.style.display = 'none';
+    }, 200); // Sesuai durasi transition CSS
+});
+
+        // --- CORE CONTROL ---
+        function generateKeys() {
+            const qty = document.getElementById('genQty').value;
+            const c = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+            for(let i=0; i<qty; i++) {
+                let p1 = Math.floor(1000 + Math.random() * 9000);
+                let p2 = "";
+                for(let j=0; j<4; j++) p2 += c.charAt(Math.floor(Math.random() * c.length));
+                db.add(`OKO-${p1}-${p2}`);
+            }
+            render();
+        }
+
+        function render(data = null) {
+            const list = document.getElementById('keyList');
+            const items = data || Array.from(db);
+            document.getElementById('statTotal').innerText = db.size;
+            list.innerHTML = items.map(k => `
+                <div class="code-item">
+                    <span style="font-family:'Space Mono'; color:var(--primary)">${k}</span>
+                    <span style="font-size:9px; color:var(--accent-green); cursor:pointer" onclick="navigator.clipboard.writeText('${k}')">COPY</span>
+                </div>
+            `).reverse().join('');
+        }
+
+        function filterKeys() {
+            const val = document.getElementById('searchBox').value.toUpperCase();
+            render(Array.from(db).filter(k => k.includes(val)));
+        }
+
+        function copyAll() {
+            navigator.clipboard.writeText(Array.from(db).join("\n"));
+            alert("All keys exported to clipboard!");
+        }
+
+        function resetApp() {
+            if(confirm("WIPE ALL DATA? This cannot be undone.")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
