@@ -339,6 +339,29 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+/* Styling untuk Custom Menu Item */
+.menu-item:hover {
+    background: var(--primary);
+    color: #000;
+}
+
+.menu-item i {
+    color: var(--primary);
+}
+
+.menu-item:hover i {
+    color: #000;
+}
+
+/* Animasi putar saat refresh */
+.fa-spin-once {
+    animation: spin 0.8s ease-in-out;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
     </style>
 </head>
 <body id="body">
@@ -574,6 +597,13 @@
     </div>
 </div>
 
+<div id="customContextMenu" class="glass" style="display: none; position: fixed; z-index: 10001; min-width: 150px; padding: 8px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+    <div onclick="refreshSystem()" style="padding: 10px 15px; cursor: pointer; display: flex; align-items: center; gap: 10px; border-radius: 8px; transition: 0.3s;" class="menu-item">
+        <i class="fas fa-sync-alt" id="refresh-icon"></i>
+        <span>Refresh System</span>
+    </div>
+</div>
+
     <script>
         // SCRIPT TETAP SAMA SEPERTI VERSI 1 (RELIABLE & SIMPLE)
         const mlPrices = { 'Epic': 1000, 'Legend': 3000, 'Mythic': 6000, 'Honor': 8000, 'Glory': 9000, 'Immortal': 10000 };
@@ -696,6 +726,40 @@ function closePromo() {
     document.getElementById('promoPopup').style.display = 'none';
     // Simpan tanda di browser user bahwa mereka sudah melihat popup
     localStorage.setItem('seenPromo', 'true');
+}
+
+const contextMenu = document.getElementById('customContextMenu');
+
+// 1. Matikan Klik Kanan Bawaan & Tampilkan Menu Kustom
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    
+    contextMenu.style.display = 'block';
+    contextMenu.style.left = e.pageX + 'px';
+    contextMenu.style.top = e.pageY + 'px';
+});
+
+// 2. Tutup Menu jika klik di tempat lain
+document.addEventListener('click', function() {
+    contextMenu.style.display = 'none';
+});
+
+// 3. Fungsi Refresh System
+function refreshSystem() {
+    const icon = document.getElementById('refresh-icon');
+    
+    // Tambahkan animasi putar
+    icon.classList.add('fa-spin-once');
+    
+    // Simulasi loading refresh (bisa ganti dengan window.location.reload() jika ingin refresh halaman total)
+    setTimeout(() => {
+        icon.classList.remove('fa-spin-once');
+        contextMenu.style.display = 'none';
+        
+        // Opsional: Notifikasi kecil bahwa sistem di refresh
+        console.log("System Refreshed!"); 
+        // window.location.reload(); // Aktifkan ini jika ingin refresh halaman sungguhan
+    }, 800);
 }
     </script>
 </body>
