@@ -362,9 +362,140 @@
 @keyframes spin {
     100% { transform: rotate(360deg); }
 }
+
+/* Animasi Menu Muncul */
+#customContextMenu {
+    transform-origin: top left;
+    transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none; /* Mencegah klik saat tidak terlihat */
+}
+
+/* Saat menu aktif */
+#customContextMenu.show {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+/* Animasi putar icon refresh */
+.fa-spin-refresh {
+    animation: spinRefresh 0.8s linear;
+}
+
+@keyframes spinRefresh {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Styling Menu Navigasi Klik Kanan */
+.menu-item-nav {
+    padding: 10px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 8px;
+    transition: 0.2s;
+    font-size: 13.5px;
+    color: inherit;
+    opacity: 0.9;
+}
+
+.menu-item-nav:hover {
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 1;
+    transform: translateX(4px);
+}
+
+.menu-item-nav i {
+    width: 18px;
+    text-align: center;
+    color: var(--primary);
+}
+
+/* Khusus Tombol Order di Menu */
+.menu-item-order {
+    margin-top: 6px;
+    padding: 12px;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.menu-item-order:hover {
+    filter: brightness(1.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 242, 255, 0.3);
+}
+
+/* Mode Terang untuk Menu Klik Kanan */
+body.light-mode #customContextMenu {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0,0,0,0.1);
+    color: #1a1a1a;
+}
+body.light-mode .menu-item-nav:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
     </style>
 </head>
 <body id="body">
+
+<div id="customContextMenu" class="glass" style="display: none; position: fixed; z-index: 10001; min-width: 220px; padding: 12px 8px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); overflow: hidden;">
+    
+    <div style="text-align: center; padding: 5px 0 10px 0;">
+        <div class="logo" style="font-size: 20px;">OKOSPACE</div>
+        <div style="font-size: 9px; opacity: 0.5; letter-spacing: 1px; text-transform: uppercase;">Digital Services</div>
+    </div>
+
+    <div style="height: 1px; background: var(--glass-border); margin: 0 10px 8px 10px;"></div>
+    
+    <div onclick="window.location.href='#home'; closeMenu();" class="menu-item-nav">
+        <i class="fas fa-home"></i> <span>Home</span>
+    </div>
+    <div onclick="window.location.href='#prices'; closeMenu();" class="menu-item-nav">
+        <i class="fas fa-tags"></i> <span>Price List</span>
+    </div>
+
+    <div onclick="window.location.href='#services'; closeMenu();" class="menu-item-nav">
+        <i class="fas fa-briefcase"></i> <span>Layanan</span>
+    </div>
+
+    <div style="height: 1px; background: var(--glass-border); margin: 6px 10px;"></div>
+
+    <div onclick="window.open('https://wa.me/6285179642837', '_blank'); closeMenu();" class="menu-item-nav">
+        <i class="fab fa-whatsapp" style="color: #25D366;"></i> <span>Hubungi Admin</span>
+    </div>
+    <div onclick="toggleTheme();" class="menu-item-nav">
+        <i class="fas fa-adjust" style="color: var(--secondary);"></i> <span>Ganti Tema</span>
+    </div>
+    <div onclick="refreshSystem()" class="menu-item-nav">
+        <i class="fas fa-sync-alt" id="refresh-icon"></i> <span>Refresh System</span>
+    </div>
+
+        <div style="height: 1px; background: var(--glass-border); margin: 6px 10px;"></div>
+
+    <div onclick="copyToClipboard()" class="menu-item-nav">
+        <i class="fas fa-copy" style="color: #ffcc00;"></i> <span>Salin Link Web</span>
+    </div>
+    <div onclick="pasteToField()" class="menu-item-nav">
+        <i class="fas fa-paste" style="color: #ff8800;"></i> <span>Tempel (Paste)</span>
+    </div>
+
+    <div onclick="openModal(); closeMenu();" class="menu-item-order">
+        <i class="fas fa-shopping-cart"></i> <span>Order Sekarang</span>
+    </div>
+</div>
 
     <div class="bg-glow">
         <div class="circle c1"></div>
@@ -597,13 +728,6 @@
     </div>
 </div>
 
-<div id="customContextMenu" class="glass" style="display: none; position: fixed; z-index: 10001; min-width: 150px; padding: 8px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-    <div onclick="refreshSystem()" style="padding: 10px 15px; cursor: pointer; display: flex; align-items: center; gap: 10px; border-radius: 8px; transition: 0.3s;" class="menu-item">
-        <i class="fas fa-sync-alt" id="refresh-icon"></i>
-        <span>Refresh System</span>
-    </div>
-</div>
-
     <script>
         // SCRIPT TETAP SAMA SEPERTI VERSI 1 (RELIABLE & SIMPLE)
         const mlPrices = { 'Epic': 1000, 'Legend': 3000, 'Mythic': 6000, 'Honor': 8000, 'Glory': 9000, 'Immortal': 10000 };
@@ -730,36 +854,164 @@ function closePromo() {
 
 const contextMenu = document.getElementById('customContextMenu');
 
-// 1. Matikan Klik Kanan Bawaan & Tampilkan Menu Kustom
 document.addEventListener('contextmenu', function(e) {
     e.preventDefault();
     
+    // Reset animasi agar bisa diputar ulang
+    contextMenu.classList.remove('show');
+    
+    // Posisi
+    let x = e.clientX;
+    let y = e.clientY;
+
+    // Deteksi batas layar agar tidak terpotong
+    const winWidth = window.innerWidth;
+    const winHeight = window.innerHeight;
+    const menuWidth = 180; // Sesuaikan dengan min-width menu
+    const menuHeight = 100; // Estimasi tinggi menu
+
+    if (x + menuWidth > winWidth) x -= menuWidth;
+    if (y + menuHeight > winHeight) y -= menuHeight;
+
+    contextMenu.style.left = x + 'px';
+    contextMenu.style.top = y + 'px';
     contextMenu.style.display = 'block';
-    contextMenu.style.left = e.pageX + 'px';
-    contextMenu.style.top = e.pageY + 'px';
+
+    // Beri sedikit delay agar transisi CSS terlihat
+    setTimeout(() => {
+        contextMenu.classList.add('show');
+    }, 10);
 });
 
-// 2. Tutup Menu jika klik di tempat lain
+// Tutup menu klik kiri di mana saja
 document.addEventListener('click', function() {
-    contextMenu.style.display = 'none';
+    contextMenu.classList.remove('show');
+    setTimeout(() => {
+        if(!contextMenu.classList.contains('show')) {
+            contextMenu.style.display = 'none';
+        }
+    }, 200);
 });
 
-// 3. Fungsi Refresh System
+// FUNGSI REFRESH NYATA
 function refreshSystem() {
     const icon = document.getElementById('refresh-icon');
     
-    // Tambahkan animasi putar
-    icon.classList.add('fa-spin-once');
+    // 1. Tambah animasi putar pada icon
+    icon.classList.add('fa-spin-refresh');
     
-    // Simulasi loading refresh (bisa ganti dengan window.location.reload() jika ingin refresh halaman total)
+    // 2. Tunggu sebentar agar animasi terlihat, lalu reload halaman
     setTimeout(() => {
-        icon.classList.remove('fa-spin-once');
+        window.location.reload(); 
+    }, 500);
+}
+
+// Fungsi pembantu untuk menutup menu klik kanan dengan animasi
+function closeMenu() {
+    contextMenu.classList.remove('show');
+    setTimeout(() => {
         contextMenu.style.display = 'none';
+    }, 200);
+}
+
+// Tambahan: Pastikan fungsi Refresh menutup menu sebelum reload
+function refreshSystem() {
+    const icon = document.getElementById('refresh-icon');
+    icon.classList.add('fa-spin-refresh');
+    
+    setTimeout(() => {
+        closeMenu();
+        window.location.reload(); 
+    }, 500);
+}
+
+// Logika klik kanan yang sudah diperbaiki posisinya
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    
+    let x = e.clientX;
+    let y = e.clientY;
+
+    const winWidth = window.innerWidth;
+    const winHeight = window.innerHeight;
+    const menuWidth = 190; 
+    const menuHeight = 150; 
+
+    if (x + menuWidth > winWidth) x -= menuWidth;
+    if (y + menuHeight > winHeight) y -= menuHeight;
+
+    contextMenu.style.left = x + 'px';
+    contextMenu.style.top = y + 'px';
+    contextMenu.style.display = 'block';
+
+    setTimeout(() => {
+        contextMenu.classList.add('show');
+    }, 10);
+});
+
+// Tutup menu klik kiri di mana saja
+document.addEventListener('click', function(e) {
+    // Jika yang diklik bukan bagian dari menu, tutup menu
+    if (!contextMenu.contains(e.target)) {
+        closeMenu();
+    }
+});
+
+// Ganti bagian deteksi tinggi di dalam event listener contextmenu:
+const menuHeight = 520; // Ditingkatkan karena menu lebih panjang
+
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    
+    let x = e.clientX;
+    let y = e.clientY;
+
+    const winWidth = window.innerWidth;
+    const winHeight = window.innerHeight;
+    
+    // Estimasi tinggi menu sekarang sekitar 380px
+    const menuWidth = 210; 
+    const menuHeight = 380; 
+
+    // Balik arah menu jika di pojok kanan/bawah
+    if (x + menuWidth > winWidth) x -= menuWidth;
+    if (y + menuHeight > winHeight) y -= menuHeight;
+
+    contextMenu.style.left = x + 'px';
+    contextMenu.style.top = y + 'px';
+    contextMenu.style.display = 'block';
+
+    setTimeout(() => {
+        contextMenu.classList.add('show');
+    }, 10);
+});
+
+// FUNGSI COPY LINK WEBSITE
+function copyToClipboard() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+        alert("Link OKOSPACE berhasil disalin!");
+        closeMenu();
+    });
+}
+
+// FUNGSI PASTE (Membantu mengisi input yang sedang aktif)
+async function pasteToField() {
+    try {
+        const text = await navigator.clipboard.readText();
+        const activeElement = document.activeElement;
         
-        // Opsional: Notifikasi kecil bahwa sistem di refresh
-        console.log("System Refreshed!"); 
-        // window.location.reload(); // Aktifkan ini jika ingin refresh halaman sungguhan
-    }, 800);
+        // Cek apakah user sedang fokus di kolom input/textarea
+        if (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA') {
+            activeElement.value += text;
+            alert("Teks berhasil ditempel!");
+        } else {
+            alert("Klik pada kolom input terlebih dahulu sebelum menempel teks.");
+        }
+    } catch (err) {
+        alert("Gagal menempel: Izinkan akses clipboard pada browser Anda atau gunakan Ctrl+V.");
+    }
+    closeMenu();
 }
     </script>
 </body>
