@@ -73,6 +73,33 @@
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+
+    /* Animasi Muncul (Pop In) */
+@keyframes modalPop {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Class untuk memicu animasi */
+.animate-pop {
+    animation: modalPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Efek khusus untuk overlay (background hitam) */
+.animate-fade-in {
+    animation: fadeIn 0.2s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -98,7 +125,7 @@
                     <span class="w-6 h-0.5 bg-white transition-all"></span>
                     <span class="w-6 h-0.5 bg-white transition-all"></span>
                 </button>
-                <button onclick="window.open('https://wa.me/6285179642837', '_blank')" class="hidden md:block bg-sky-600 hover:bg-sky-500 text-white px-4 py-2 rounded-full text-xs font-bold transition">ADMIN</button>
+                <button onclick="toggleModal('chatModal')" class="hidden md:block bg-sky-600 hover:bg-sky-500 text-white px-4 py-2 rounded-full text-xs font-bold transition">ADMIN</button>
             </div>
         </div>
     </nav>
@@ -111,7 +138,7 @@
         <a href="#premium" class="mobile-link">Premium Apps</a>
         <button onclick="toggleModal('donationModal')" class="mobile-link text-yellow-500">Donasi (QRIS)</button>
         <button onclick="toggleModal('liveModal')" class="text-red-500 text-lg">Live Stream</button>
-        <button onclick="window.open('https://wa.me/6285179642837', '_blank')" class="bg-sky-600 text-white px-8 py-3 rounded-2xl text-sm font-bold">Hubungi Admin</button>
+        <button onclick="toggleModal('chatModal')" class="bg-sky-600 text-white px-8 py-3 rounded-2xl text-sm font-bold">Hubungi Admin</button>
     </div>
 
     <!-- Hero Section -->
@@ -356,6 +383,26 @@
             <span>&bull;</span>
             <a href="https://wa.me/6285179642837" class="hover:text-green-400">WhatsApp</a>
         </div>
+<div id="chatModal" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/80 backdrop-blur-md md:p-6 animate-fade-in">
+    <div class="glass w-full h-full md:h-auto md:max-w-md p-8 flex flex-col relative justify-center md:justify-start md:rounded-3xl animate-pop">
+        <button onclick="toggleModal('chatModal')" class="absolute top-6 right-6 text-slate-400 hover:text-white text-2xl transition-transform hover:rotate-90 duration-300">&times;</button>
+        
+        <h3 class="text-2xl font-black mb-2 uppercase text-sky-500">Chat Admin</h3>
+        <p class="text-slate-400 text-sm mb-6">Punya pertanyaan? Tulis pesanmu di bawah ini dan kami akan membalas secepatnya via WhatsApp.</p>
+        
+        <div class="space-y-4">
+            <textarea id="pesanUser" 
+                class="w-full h-40 bg-white/5 border border-white/10 rounded-2xl px-4 py-3 focus:outline-none focus:border-sky-500 transition text-sm text-white placeholder:text-slate-500 resize-none"
+                placeholder="Halo admin, saya mau tanya tentang..."></textarea>
+            
+            <button onclick="kirimKeWA()" 
+                class="w-full bg-green-600 hover:bg-green-500 text-white py-4 rounded-2xl font-bold text-sm transition btn-glow flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.484 8.412-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.309 1.656zm6.224-3.82l.448.267c1.527.908 3.299 1.387 5.111 1.388 5.454 0 9.893-4.439 9.896-9.895.002-2.644-1.029-5.129-2.903-7.005s-4.361-2.906-7.006-2.906c-5.454 0-9.894 4.439-9.897 9.896-.001 1.83.48 3.613 1.392 5.162l.293.496-1.092 3.989 4.078-1.07z"/></svg>
+                Kirim ke WhatsApp
+            </button>
+        </div>
+    </div>
+</div>
     </footer>
 
     <!-- AOS Library JS -->
@@ -451,6 +498,23 @@ Bintang: ${document.getElementById('bintang').value}`;
 
         // Tampilkan notifikasi pertama setelah 3 detik halaman dimuat
         setTimeout(showFakeNotif, 3000);
+
+    function kirimKeWA() {
+    const nomorAdmin = "6285179642837"; 
+    const pesan = document.getElementById("pesanUser").value;
+
+    if (pesan.trim() !== "") {
+        const url = "https://wa.me/" + nomorAdmin + "?text=" + encodeURIComponent(pesan);
+        window.open(url, '_blank');
+        
+        // Opsional: Tutup modal setelah klik kirim
+        toggleModal('chatModal');
+        // Bersihkan isi pesan
+        document.getElementById("pesanUser").value = "";
+    } else {
+        alert("Silakan tulis pesan terlebih dahulu.");
+    }
+}
     </script>
 </body>
 </html>
