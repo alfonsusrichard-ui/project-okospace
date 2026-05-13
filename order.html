@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Form - Okospace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .step-transition {
+            transition: all 0.3s ease-in-out;
+        }
+        input, select {
+            background: rgba(15, 23, 42, 0.6) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+        }
+        input:focus, select:focus {
+            border-color: #0ea5e9 !important;
+            ring: 2px #0ea5e9;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-md mx-auto mt-10">
+        <!-- Logo/Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-500">
+                OKOSPACE ORDER
+            </h1>
+            <p class="text-slate-400 text-sm mt-2">Layanan Digital Termurah dan Terpercaya</p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+            <!-- Progress Bar -->
+            <div class="h-1 bg-slate-700 w-full mb-6 rounded-full overflow-hidden">
+                <div id="progressBar" class="h-full bg-sky-500 w-1/3 transition-all duration-500"></div>
+            </div>
+
+            <!-- STEP 1: PILIH KATEGORI -->
+            <div id="step1" class="step-transition">
+                <h2 class="text-xl font-bold mb-4 text-center">Pilih Kategori Layanan</h2>
+                <div class="grid grid-cols-1 gap-4">
+                    <button onclick="goToStep('joki')" class="group relative flex items-center p-4 bg-slate-800/50 hover:bg-sky-500/20 border border-slate-700 hover:border-sky-500 rounded-2xl transition-all duration-300">
+                        <div class="bg-sky-500/20 p-3 rounded-xl mr-4 group-hover:scale-110 transition-transform">
+                            🎮
+                        </div>
+                        <div class="text-left">
+                            <p class="font-bold">Joki MLBB</p>
+                            <p class="text-xs text-slate-400">Push Rank Cepat & Aman</p>
+                        </div>
+                    </button>
+                    
+                    <button onclick="goToStep('digital')" class="group relative flex items-center p-4 bg-slate-800/50 hover:bg-indigo-500/20 border border-slate-700 hover:border-indigo-500 rounded-2xl transition-all duration-300">
+                        <div class="bg-indigo-500/20 p-3 rounded-xl mr-4 group-hover:scale-110 transition-transform">
+                            💎
+                        </div>
+                        <div class="text-left">
+                            <p class="font-bold">Layanan Digital</p>
+                            <p class="text-xs text-slate-400">Premium Apps & Subscriptions</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 2A: FORM JOKI -->
+            <div id="stepJoki" class="hidden step-transition">
+                <button onclick="backToStep1()" class="text-sky-400 text-xs mb-4 flex items-center hover:underline">
+                    ← Kembali ke menu utama
+                </button>
+                <h2 class="text-xl font-bold mb-4">Detail Joki MLBB</h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">AKUN MLBB (ID & Nick)</label>
+                        <input type="text" id="jokiId" placeholder="Contoh: 12345678 (2024)" class="w-full px-4 py-3 rounded-xl outline-none">
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">LOGIN VIA</label>
+                            <select id="jokiLogin" class="w-full px-4 py-3 rounded-xl outline-none">
+                                <option value="Google">Google</option>
+                                <option value="Moonton">Moonton</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">PASSWORD</label>
+                            <input type="password" id="jokiPass" placeholder="*****" class="w-full px-4 py-3 rounded-xl outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">DARI RANK</label>
+                            <select id="jokiRankDari" onchange="hitungHargaJoki()" class="w-full px-4 py-3 rounded-xl outline-none">
+                                <option value="500">Grandmaster</option>
+                                <option value="1000">Epic</option>
+                                <option value="3000">Legend</option>
+                                <option value="5000">Mythic</option>
+                                <option value="7000">Honor</option>
+                                <option value="9000">Glory</option>
+                                <option value="10000">Immortal</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">JUMLAH BINTANG</label>
+                            <input type="number" id="jokiBintang" oninput="hitungHargaJoki()" value="1" min="1" class="w-full px-4 py-3 rounded-xl outline-none">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">METODE PEMBAYARAN</label>
+                        <select id="jokiBayar" class="w-full px-4 py-3 rounded-xl outline-none">
+                            <option value="QRIS ALL PAYMENT">QRIS ALL PAYMENT</option>
+                            <option value="SEABANK">SEABANK</option>
+                            <option value="JAGO">JAGO</option>
+                        </select>
+                    </div>
+
+                    <div class="bg-sky-500/10 p-4 rounded-2xl border border-sky-500/30">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-medium">Total Harga</span>
+                            <span id="totalJoki" class="text-xl font-bold text-sky-400">Rp 500</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
+                        <p class="text-[10px] text-red-400 text-center uppercase font-bold tracking-widest">
+                            Note: Jangan login selama proses joki berlangsung!
+                        </p>
+                    </div>
+
+                    <button onclick="sendWaJoki()" class="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-sky-500/20">
+                        Kirim ke WhatsApp
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 2B: FORM DIGITAL -->
+            <div id="stepDigital" class="hidden step-transition">
+                <button onclick="backToStep1()" class="text-indigo-400 text-xs mb-4 flex items-center hover:underline">
+                    ← Kembali ke menu utama
+                </button>
+                <h2 class="text-xl font-bold mb-4">Pemesanan Digital</h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">PILIH PRODUK</label>
+                        <select id="digitalProduct" onchange="updateDigitalForm()" class="w-full px-4 py-3 rounded-xl outline-none">
+                            <option value="2000" data-name="Canva Premium 1 Bulan">Canva Premium 1 Bulan - Rp 2.000</option>
+                            <option value="10000" data-name="Youtube Premium 1 Bulan">Youtube Premium 1 Bulan - Rp 10.000</option>
+                            <option value="20000" data-name="Spotify Premium 1 Bulan">Spotify Premium 1 Bulan - Rp 20.000</option>
+                            <option value="19000" data-name="Netflix Sharing 1 Bulan">Netflix Sharing 1 Bulan - Rp 19.000</option>
+                        </select>
+                    </div>
+
+                    <div id="emailContainer">
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">EMAIL (Untuk Invite)</label>
+                        <input type="email" id="digitalEmail" placeholder="example@mail.com" class="w-full px-4 py-3 rounded-xl outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">METODE PEMBAYARAN</label>
+                        <select id="digitalBayar" class="w-full px-4 py-3 rounded-xl outline-none">
+                            <option value="QRIS ALL PAYMENT">QRIS ALL PAYMENT</option>
+                            <option value="SEABANK">SEABANK</option>
+                            <option value="JAGO">JAGO</option>
+                        </select>
+                    </div>
+
+                    <div class="bg-indigo-500/10 p-4 rounded-2xl border border-indigo-500/30">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-medium">Total Harga</span>
+                            <span id="totalDigital" class="text-xl font-bold text-indigo-400">Rp 2.000</span>
+                        </div>
+                    </div>
+
+                    <button onclick="sendWaDigital()" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-indigo-500/20">
+                        Kirim ke WhatsApp
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <p class="text-center text-slate-500 text-[10px] mt-6 uppercase tracking-widest">Powered by Okospace</p>
+    </div>
+
+    <script>
+        const waNumber = "6285179642837";
+
+        function goToStep(category) {
+            document.getElementById('step1').classList.add('hidden');
+            const progressBar = document.getElementById('progressBar');
+            
+            if(category === 'joki') {
+                document.getElementById('stepJoki').classList.remove('hidden');
+                progressBar.style.width = '100%';
+                progressBar.classList.replace('bg-sky-500', 'bg-sky-500');
+            } else {
+                document.getElementById('stepDigital').classList.remove('hidden');
+                progressBar.style.width = '100%';
+                progressBar.classList.replace('bg-sky-500', 'bg-indigo-500');
+            }
+        }
+
+        function backToStep1() {
+            document.getElementById('step1').classList.remove('hidden');
+            document.getElementById('stepJoki').classList.add('hidden');
+            document.getElementById('stepDigital').classList.add('hidden');
+            document.getElementById('progressBar').style.width = '33%';
+        }
+
+        // --- LOGIC JOKI ---
+        function hitungHargaJoki() {
+            const hargaPerBintang = parseInt(document.getElementById('jokiRankDari').value);
+            const jumlahBintang = parseInt(document.getElementById('jokiBintang').value) || 0;
+            const total = hargaPerBintang * jumlahBintang;
+            document.getElementById('totalJoki').innerText = "Rp " + total.toLocaleString('id-ID');
+        }
+
+        function sendWaJoki() {
+            const id = document.getElementById('jokiId').value;
+            const login = document.getElementById('jokiLogin').value;
+            const pass = document.getElementById('jokiPass').value;
+            const rank = document.getElementById('jokiRankDari').options[document.getElementById('jokiRankDari').selectedIndex].text;
+            const bintang = document.getElementById('jokiBintang').value;
+            const total = document.getElementById('totalJoki').innerText;
+            const bayar = document.getElementById('jokiBayar').value;
+
+            if(!id || !pass || !bintang) {
+                alert("Harap isi semua kolom!");
+                return;
+            }
+
+            const text = `*FORM ORDER JOKI MLBB - OKOSPACE*%0A%0A` +
+                         `🕹️ Akun: ${id}%0A` +
+                         `🔐 Login: ${login}%0A` +
+                         `🔑 Password: ${pass}%0A` +
+                         `🎖️ Dari Rank: ${rank}%0A` +
+                         `⭐ Jumlah: ${bintang} Bintang%0A` +
+                         `💰 Total: ${total}%0A` +
+                         `💳 Pembayaran: ${bayar}%0A%0A` +
+                         `_Note: Mohon diproses secepatnya admin!_`;
+            
+            window.open(`https://wa.me/${waNumber}?text=${text}`, '_blank');
+        }
+
+        // --- LOGIC DIGITAL ---
+        function updateDigitalForm() {
+            const select = document.getElementById('digitalProduct');
+            const selectedText = select.options[select.selectedIndex].getAttribute('data-name');
+            const harga = select.value;
+            const emailContainer = document.getElementById('emailContainer');
+
+            document.getElementById('totalDigital').innerText = "Rp " + parseInt(harga).toLocaleString('id-ID');
+
+            // Sembunyikan email jika bukan Canva atau Youtube
+            if(selectedText.includes("Canva") || selectedText.includes("Youtube")) {
+                emailContainer.classList.remove('hidden');
+            } else {
+                emailContainer.classList.add('hidden');
+            }
+        }
+
+        function sendWaDigital() {
+            const select = document.getElementById('digitalProduct');
+            const produk = select.options[select.selectedIndex].getAttribute('data-name');
+            const total = document.getElementById('totalDigital').innerText;
+            const email = document.getElementById('digitalEmail').value;
+            const bayar = document.getElementById('digitalBayar').value;
+            const isEmailVisible = !document.getElementById('emailContainer').classList.contains('hidden');
+
+            if(isEmailVisible && !email) {
+                alert("Harap isi email untuk produk ini!");
+                return;
+            }
+
+            let text = `*FORM ORDER DIGITAL - OKOSPACE*%0A%0A` +
+                       `💎 Produk: ${produk}%0A` +
+                       `💰 Total: ${total}%0A` +
+                       `💳 Pembayaran: ${bayar}%0A`;
+            
+            if(isEmailVisible) {
+                text += `📧 Email: ${email}%0A`;
+            }
+
+            text += `%0A_Mohon diproses secepatnya admin!_`;
+            
+            window.open(`https://wa.me/${waNumber}?text=${text}`, '_blank');
+        }
+    </script>
+</body>
+</html>

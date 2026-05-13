@@ -12,8 +12,6 @@
     <!-- AOS Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5980437574339037"
-     crossorigin="anonymous"></script>
     <style>
         :root {
             --primary: #0ea5e9;
@@ -116,7 +114,7 @@
                 <a href="#" class="hover:text-sky-400 transition">Home</a>
                 <a href="#joki" class="hover:text-sky-400 transition">Joki ML</a>
                 <a href="#digital" class="hover:text-sky-400 transition">Produk Digital</a>
-                <a href="#premium" class="hover:text-sky-400 transition">Premium</a>
+                <a href="#premium" class="hover:text-sky-400 transition">Premium Apps</a>
                 <button onclick="toggleModal('donationModal')" class="hover:text-yellow-400 transition">Donasi</button>
             </div>
 
@@ -189,14 +187,14 @@
                 Layanan profesional, cepat, dan amanah. Tingkatkan rank game-mu dan dapatkan aset digital premium dengan harga mahasiswa.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4" data-aos="fade-up" data-aos-delay="200">
-                <a href="#joki" class="btn-glow bg-sky-600 text-white px-8 py-4 rounded-2xl font-bold text-sm">Order Sekarang</a>
+                <a href="/order.html" class="btn-glow bg-sky-600 text-white px-8 py-4 rounded-2xl font-bold text-sm">Order Sekarang</a>
                 <button onclick="toggleModal('donationModal')" class="glass px-8 py-4 rounded-2xl font-bold text-sm border-yellow-500/30 text-yellow-500">Support Kami</button>
             </div>
         </div>
     </section>
 
  <section class="max-w-6xl mx-auto px-6 mt-10">
-  <h2 class="text-lg font-semibold mb-4">E-Wallet & Pembayaran</h2>
+  <h2 class="text-lg font-semibold mb-4">Topup E-Wallet</h2>
 
   <div class="grid grid-cols-3 md:grid-cols-4 gap-4">
 
@@ -225,14 +223,6 @@
       <p class="text-sm">DANA</p>
     </a>
 
-    <a href="https://okospacetopup.gamesquad.id/ewallet/shopeepay" target="_blank"
-      class="bg-[#1e293b] rounded-2xl p-3 flex flex-col items-center hover:scale-105 hover:bg-[#334155] transition">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/ShopeePay_logo.svg"
-           onerror="this.style.display='none'"
-           class="h-8 mb-2">
-      <p class="text-sm">ShopeePay</p>
-    </a>
-
     <a href="https://okospacetopup.gamesquad.id/ewallet/link-aja" target="_blank"
       class="bg-[#1e293b] rounded-2xl p-3 flex flex-col items-center hover:scale-105 hover:bg-[#334155] transition">
       <img src="https://upload.wikimedia.org/wikipedia/commons/8/85/LinkAja.svg"
@@ -242,6 +232,12 @@
     </a>
 
     <!-- TANPA LOGO -->
+
+    <a href="https://okospacetopup.gamesquad.id/ewallet/shopeepay" target="_blank"
+      class="bg-[#1e293b] rounded-2xl p-3 text-center hover:scale-105 hover:bg-[#334155] transition">
+      ShopeePay
+    </a>
+
     <a href="https://okospacetopup.gamesquad.id/ewallet/gojek-driver" target="_blank"
       class="bg-[#1e293b] rounded-2xl p-3 text-center hover:scale-105 hover:bg-[#334155] transition">
       Gojek Driver
@@ -320,21 +316,10 @@
             </div>
 
             <!-- Form -->
-            <div class="glass p-8" data-aos="fade-up" data-aos-delay="100">
-                <h3 class="text-lg font-bold mb-6 flex items-center gap-2">
-                    <span class="w-2 h-2 bg-sky-500 rounded-full animate-pulse"></span>
-                    Form Order Joki
-                </h3>
-                <form id="jokiForm" class="space-y-4">
-                    <input type="text" id="Email" placeholder="Email" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-sky-500 transition text-sm text-white" required>
-                    <input type="text" id="Password" placeholder="Password" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-sky-500 transition text-sm text-white" required>
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="text" id="rankSekarang" placeholder="Rank Sekarang" class="bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-sky-500 transition text-sm text-white" required>
-                        <input type="text" id="targetRank" placeholder="Target Rank" class="bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-sky-500 transition text-sm text-white" required>
-                    </div>
-                    <input type="number" id="bintang" placeholder="Jumlah Bintang" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-sky-500 transition text-sm text-white" required>
-                    <button type="submit" class="w-full bg-sky-600 hover:bg-sky-500 py-4 rounded-xl font-bold text-sm transition mt-4 btn-glow uppercase tracking-widest">Kirim ke WhatsApp</button>
-                </form>
+            <div class="text-center md:text-left" data-aos="fade-left">
+                <h3 class="text-3xl font-bold mb-4">Butuh Push Rank?</h3>
+                <p class="text-slate-400 mb-6">Proses cepat, aman, dan dikerjakan oleh pro player. Klik tombol di bawah untuk mengisi detail order di halaman pemesanan.</p>
+                <a href="/order.html" class="inline-block bg-sky-600 hover:bg-sky-500 px-10 py-4 rounded-2xl font-bold transition btn-glow">Order Joki Sekarang →</a>
             </div>
         </div>
     </section>
@@ -381,6 +366,32 @@
                         <a href="http://lynk.id/okospace/0okzpx1dpe6v/checkout" class="bg-white text-black px-6 py-2 rounded-xl font-bold text-sm hover:bg-amber-400 transition">Checkout</a>
                     </div>
                 </div>
+
+                <!-- Produk 3 -->
+                 <div class="glass p-6 group border-2 border-sky-500/30 relative" data-aos="fade-up">
+                    <div class="absolute -top-3 left-6 bg-sky-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase">🔥 Cuma Hari Ini!</div>
+                    <h3 class="text-xl font-bold mb-2 mt-2">500 Produk Digital Premium</h3>
+                    <p class="text-slate-400 text-xs mb-4">Siap jual kembali (PLR). 100% profit untuk kamu + 🎁 Bonus GRATIS Bimbingan!</p>
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <span class="block text-slate-500 line-through text-xs italic">Rp 100.000</span>
+                            <span class="text-2xl font-black text-white">Rp 19.000</span>
+                        </div>
+                        <a href="http://lynk.id/okospace/vn0jl4q59y64/checkout" class="bg-sky-600 text-white px-4 py-2 rounded-xl font-bold text-sm hover:bg-sky-500 transition">Ambil</a>
+                    </div>
+                </div>
+
+                <!-- Produk 4 -->
+                 <div class="glass p-6 group" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-bold mb-2">Cuan Tanpa Modal</h3>
+                    <p class="text-slate-400 text-xs mb-4">Strategi jitu memulai bisnis dari nol ala OKOSPACE.</p>
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <span class="text-2xl font-black text-white">Rp 5.000</span>
+                        </div>
+                        <a href="http://lynk.id/okospace/q64r2x8j7p44/checkout" class="bg-white text-black px-4 py-2 rounded-xl font-bold text-sm hover:bg-sky-400 transition">Beli</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -407,7 +418,7 @@
 
             <div class="glass p-5 border-l-4 border-l-green-500 flex flex-col justify-between hover:bg-green-500/5 transition">
                 <div>
-                    <h4 class="font-bold text-lg mb-1">Spotify Premium</h4>
+                    <h4 class="font-bold text-lg mb-1"> Akun Spotify Premium</h4>
                     <span class="text-xs text-slate-400">Individual/Family</span>
                 </div>
                 <div class="mt-4 flex justify-between items-center">
@@ -418,22 +429,22 @@
 
             <div class="glass p-5 border-l-4 border-l-pink-500 flex flex-col justify-between hover:bg-pink-500/5 transition">
                 <div>
-                    <h4 class="font-bold text-lg mb-1">Apple Music</h4>
-                    <span class="text-xs text-slate-400">Invite Account</span>
+                    <h4 class="font-bold text-lg mb-1">Netflix Sharing</h4>
+                    <span class="text-xs text-slate-400">Sharing Account</span>
                 </div>
                 <div class="mt-4 flex justify-between items-center">
                     <span class="text-pink-400 font-bold">20K<small class="text-slate-500">/bln</small></span>
-                    <button onclick="orderWA('Apple Music Invite')" class="text-[10px] bg-white/10 hover:bg-white/20 px-3 py-1 rounded-md font-bold uppercase transition">Order</button>
+                    <button onclick="orderWA('Netflix Sharing')" class="text-[10px] bg-white/10 hover:bg-white/20 px-3 py-1 rounded-md font-bold uppercase transition">Order</button>
                 </div>
             </div>
             
             <div class="glass p-5 border-l-4 border-l-sky-300 flex flex-col justify-between hover:bg-sky-300/5 transition">
                 <div>
                     <h4 class="font-bold text-lg mb-1">Canva Premium</h4>
-                    <span class="text-xs text-slate-400">Pro/Monthly</span>
+                    <span class="text-xs text-slate-400">Invite Link</span>
                 </div>
                 <div class="mt-4 flex justify-between items-center">
-                    <span class="text-sky-300 font-bold">1K<small class="text-slate-500">/bln</small></span>
+                    <span class="text-sky-300 font-bold">2K<small class="text-slate-500">/bln</small></span>
                     <button onclick="orderWA('Canva Premium')" class="text-[10px] bg-white/10 hover:bg-white/20 px-3 py-1 rounded-md font-bold uppercase transition">Order</button>
                 </div>
             </div>
@@ -500,11 +511,11 @@
     <!-- Footer -->
     <footer class="border-t border-white/5 py-10 px-6 text-center">
         <p class="text-2xl font-extrabold tracking-tighter gradient-text mb-2">OKOSPACE</p>
-        <p class="text-slate-500 text-[10px] uppercase tracking-widest">&copy; 2024. All rights reserved.</p>
+        <p class="text-slate-500 text-[10px] uppercase tracking-widest">&copy; 2026 Powered by Okospace</p>
         <div class="mt-4 flex justify-center gap-4 text-xs text-slate-400">
             <a href="#" onclick="toggleModal('donationModal')" class="hover:text-yellow-500">Donasi</a>
             <span>&bull;</span>
-            <a href="#joki" class="hover:text-sky-400">Order Joki</a>
+            <a href="/order.html" class="hover:text-sky-400">Order Joki</a>
             <span>&bull;</span>
             <a href="https://wa.me/6285179642837" class="hover:text-green-400">WhatsApp</a>
         </div>
